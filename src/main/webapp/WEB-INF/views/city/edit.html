@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html"  charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title th:text="#{city.title.edit}"></title>
+</head>
+<style>
+    * {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+    }
+
+    form {
+        position: relative;
+        /*left: 40%;*/
+        /*!*top: 200px;*!*/
+    }
+
+    #cities td, #cities th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #cities tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #cities tr:hover {
+        background-color: #ddd;
+    }
+
+    #cities th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    input[type=submit] {
+        width: 80px;
+        height: 30px;
+        position: relative;
+        top: 330px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    button {
+        width: 80px;
+        height: 30px;
+        position: relative;
+        top: 330px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    button:hover {
+        background-color: #ff00ff;
+    }
+
+    input[type=submit]:hover {
+        background-color: #ff00ff;
+    }
+</style>
+<body>
+<h1 th:text="#{city.title.edit}"></h1>
+<th:block th:if="${message}">
+    <p style="color: red;" th:text="${message}"></p>
+</th:block>
+<form th:action="@{/admin/cities/edit}" th:object="${city}" method="post">
+    <input th:type="hidden" name="id" th:field="*{id}">
+    <table id="cities">
+        <tr>
+            <td th:text="#{city.name}"></td>
+            <td><input th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td th:text="#{city.nation}"></td>
+            <td>
+                <select name="nation">
+                    <option th:each="nation : ${nations}"
+                            th:value="${nation.id}"
+                            th:text="${nation.name}"
+                            th:selected="(${nation.id} == *{nation.id})"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td th:text="#{city.area}"></td>
+            <td><input th:field="*{area}"/></td>
+            <td style="color: red;" th:if="${#fields.hasErrors('area')}" th:errors="*{area}">Area Error</td>
+        </tr>
+        <tr>
+            <td th:text="#{city.population}"></td>
+            <td><input th:field="*{population}"/></td>
+            <td style="color: red;" th:if="${#fields.hasErrors('population')}" th:errors="*{population}">Population
+                Error
+            </td>
+
+        </tr>
+        <tr>
+            <td th:text="#{city.gdp}"></td>
+            <td><input th:field="*{gdp}"/></td>
+            <td style="color: red;" th:if="${#fields.hasErrors('gdp')}" th:errors="*{gdp}">GDP Error</td>
+
+        </tr>
+        <tr>
+            <td th:text="#{city.description}"></td>
+            <td><textarea cols="20" rows="5" th:field="*{description}"/></td>
+            <td style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
+                Error
+            </td>
+
+        </tr>
+        <input style="left: 115px;" type="submit" th:value="#{city.btn.update}">
+        <a th:href="@{/admin/cities}">
+            <button style="left: 130px;" type="button" th:text="#{city.btn.exit}"></button>
+        </a>
+    </table>
+</form>
+<br>
+<br>
+<br>
+<footer>&copy; 6-2020 Alex Vũ - C0220H1</footer>
+</body>
+</html>
